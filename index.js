@@ -18,7 +18,7 @@ function getDataPromisified(index, cb) {
       if (cb) {
         resolve([data[index], cb]);
       } else {
-        resolve(data[index], cb);
+        resolve(data[index]);
       }
     }
   });
