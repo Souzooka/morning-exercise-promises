@@ -8,14 +8,18 @@ function getData(index, cb) {
 
 // wrap getData in a promise and console log the output
 
-function getDataPromisified(index) {
+function getDataPromisified(index, cb) {
   return new Promise((resolve, reject) => {
     let err = null;
     if (index < 0) { err = new Error('index out of bounds'); }
     if (err) {
       reject(err);
     } else {
-      resolve(data[index]);
+      if (cb) {
+        resolve([data[index], cb]);
+      } else {
+        resolve(data[index], cb);
+      }
     }
   });
 }
@@ -30,6 +34,11 @@ getDataPromisified(2)
 .then ((data) => {console.log(data)});
 
 // create a promise within getData and use the promise to trigger the callback in getData
+
+getDataPromisified(0, (data) => {console.log(data)})
+.then( (arr) => {
+  arr[1](arr[0]);
+});
 
 // create a promisified version of getData
 
